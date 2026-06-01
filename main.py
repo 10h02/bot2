@@ -71,13 +71,22 @@ async def on_guild_join(guild):
 
 async def main():
     async with bot:
-        await bot.load_extension("cogs.moderation")
-        await bot.load_extension("cogs.gestion")
-        await bot.load_extension("cogs.fun")
-        await bot.load_extension("cogs.securite")
-        await bot.load_extension("cogs.avance")
-        await bot.load_extension("cogs.tickets")
-        await bot.load_extension("cogs.annonces")
+        cogs = [
+            "cogs.moderation",
+            "cogs.gestion",
+            "cogs.fun",
+            "cogs.securite",
+            "cogs.avance",
+            "cogs.tickets",
+            "cogs.annonces",
+            "cogs.extras",
+        ]
+        for cog in cogs:
+            try:
+                await bot.load_extension(cog)
+                print(f"✅ {cog} chargé")
+            except Exception as e:
+                print(f"❌ Erreur chargement {cog} : {e}")
         await bot.start(os.getenv("DISCORD_TOKEN"))
 
 asyncio.run(main())
